@@ -1,0 +1,18 @@
+package core;
+
+import graphics.Camera;
+
+public class Player extends Character 
+{
+	private Camera playerCamera;
+	
+	public Player()
+	{
+		
+	}
+	
+	public void update()
+	{
+		playerCamera.SetPosition(getPosition());
+	}
+}

@@ -1,0 +1,14 @@
+package main;
+import javax.swing.JFrame;
+
+public class Main 
+{
+
+	public static void main(String[] args) 
+	{
+		JFrame mainWindow = new JFrame();
+		mainWindow.setSize(1280, 720);
+		mainWindow.setTitle("Game Name Goes Here");
+		mainWindow.setVisible(true);
+	}
+}

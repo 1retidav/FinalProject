@@ -1,0 +1,31 @@
+package graphics;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Node;
+
+import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.universe.SimpleUniverse;
+
+public class Graphics3D 
+{
+	static SimpleUniverse universe;
+	static BranchGroup objects;
+	
+	public Graphics3D()
+	{
+		universe = new SimpleUniverse();
+		universe.getViewer().getJFrame(0).setSize(1280, 720);
+		universe.getViewer().getJFrame(0).setTitle("Game Title");
+		universe.getViewer().getJFrame(0).setResizable(false);
+		objects = new BranchGroup();
+		
+		universe.getViewingPlatform().setNominalViewingTransform();
+		AddObject(null);
+	}
+	
+	public void AddObject(RenderObject toAdd)
+	{
+		objects.addChild(new ColorCube(0.3));
+		universe.addBranchGraph(objects);
+
+	}
+}

@@ -1,0 +1,39 @@
+package core;
+
+import javax.vecmath.Vector3d;
+
+public class Character 
+{
+	private Vector3d position;
+	
+	public void move(int x, int y, int z)
+	{
+		position.x += x;
+		position.y += y;
+		position.z += z;
+	}
+	
+	public void setPosition(int x, int y, int z)
+	{
+		position.x = x;
+		position.y = y;
+		position.z = z;
+	}
+	
+	public void move(Vector3d toMove)
+	{
+		position.x += toMove.x;
+		position.y += toMove.y;
+		position.z += toMove.z;
+	}
+	
+	public void setPosition(Vector3d newPosition)
+	{
+		
+	}
+	
+	public Vector3d getPosition()
+	{
+		return position;
+	}
+}

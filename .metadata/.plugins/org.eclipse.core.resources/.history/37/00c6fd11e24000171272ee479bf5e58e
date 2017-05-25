@@ -1,0 +1,23 @@
+package main;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JFrame;
+import graphics.Graphics3D;
+import io.Input;
+
+public class Main 
+{
+	static Graphics3D graphicsHandler;
+	
+	public static void main(String[] args) 
+	{	
+		graphicsHandler = new Graphics3D();
+		graphicsHandler.getWindow().setSize(1280, 720);
+		graphicsHandler.getWindow().setTitle("Game Title");
+		graphicsHandler.getWindow().setResizable(false);
+		
+		graphicsHandler.getWindow().addKeyListener(new Input.keyHandler());
+	}
+	
+	
+}

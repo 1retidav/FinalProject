@@ -1,0 +1,13 @@
+package graphics;
+
+import javax.vecmath.Vector3d;
+
+public class Camera 
+{
+	Vector3d position;
+	
+	public Camera()
+	{
+		
+	}
+}

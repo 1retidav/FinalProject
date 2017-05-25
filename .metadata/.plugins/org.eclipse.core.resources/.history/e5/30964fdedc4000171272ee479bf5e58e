@@ -1,0 +1,19 @@
+package main;
+import javax.swing.JFrame;
+import graphics.Graphics3D;
+
+public class Main 
+{
+	static Graphics3D graphicsHandler;
+	
+	public static void main(String[] args) 
+	{
+		JFrame mainWindow = new JFrame();
+		mainWindow.setSize(1280, 720);
+		mainWindow.setTitle("Game Name Goes Here");
+		mainWindow.setVisible(true);
+		
+		graphicsHandler = new Graphics3D();
+		
+	}
+}

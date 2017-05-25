@@ -1,0 +1,10 @@
+package core;
+
+import javax.vecmath.Vector3d;
+
+public class Character 
+{
+	private Vector3d position;
+	
+	
+}

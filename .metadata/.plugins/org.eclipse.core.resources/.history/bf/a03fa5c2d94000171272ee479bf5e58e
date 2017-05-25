@@ -1,0 +1,11 @@
+package graphics;
+import com.sun.j3d.utils.universe.SimpleUniverse;
+
+public class Graphics3D 
+{
+	public Graphics3D()
+	{
+		SimpleUniverse universe = new SimpleUniverse();
+	}
+	
+}
