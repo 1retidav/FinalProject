@@ -1,6 +1,8 @@
 package main;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Timer;
 import core.Player;
 import graphics.Graphics3D;
@@ -10,7 +12,7 @@ public class Main
 {
 	static Graphics3D graphicsHandler;
 	static Player player;
-	
+	static Robot robot;
 	
 	public static void main(String[] args) 
 	{	
@@ -20,34 +22,15 @@ public class Main
 		graphicsHandler.getWindow().setResizable(false);
 		
 		graphicsHandler.getCanvas().addKeyListener(new Input.keyHandler());
-		new Timer(2, new ActionListener(){@Override public void actionPerformed(ActionEvent arg0) {mainGameLoop();}}).start();
+		graphicsHandler.getCanvas().addMouseListener(new Input.mouseHandler());
+		graphicsHandler.getCanvas().addMouseMotionListener(new Input.mouseMovementHandler());
+		
+		graphicsHandler.getWindow().setLocation(50, 50);
 		
 		player = new Player(graphicsHandler.getUniverse());
-	}
-	
-	public static void mainGameLoop()
-	{
-		graphicsHandler.Repaint();
-		player.update();
+		Input.Register();
 		
-		if(Input.IsKeyDown('w'))
-		{
-			player.move(0, 0, 1);
-		}
-		
-		if(Input.IsKeyDown('s'))
-		{
-			player.move(0, 0, -1);
-		}
-		
-		if(Input.IsKeyDown('a'))
-		{
-			player.move(-1, 0, 0);
-		}
-		
-		if(Input.IsKeyDown('d'))
-		{
-			player.move(1, 0, 1);
-		}
+		GameCode.onGameStart(graphicsHandler, player);
+		new Timer(16, new ActionListener(){@Override public void actionPerformed(ActionEvent arg0) {GameCode.mainGameLoop(graphicsHandler, player);}}).start();
 	}
 }

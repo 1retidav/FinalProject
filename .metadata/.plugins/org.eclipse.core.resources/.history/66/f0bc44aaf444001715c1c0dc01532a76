@@ -1,0 +1,32 @@
+package graphics;
+
+import javax.vecmath.Vector3d;
+
+import com.sun.j3d.utils.geometry.Box;
+
+import core.GameObject;
+
+public class BoxObject extends GameObject 
+{
+	private static Box shape = new Box();
+	
+	public BoxObject()
+	{
+		
+	}
+	
+	public BoxObject(Vector3d position, Vector3d rotation, Vector3d scale)
+	{
+		
+	}
+	
+	public BoxObject(Vector3d min, Vector3d max)
+	{
+		
+	}
+	
+	public Box getShape()
+	{
+		return shape;
+	}
+}

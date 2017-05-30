@@ -1,0 +1,15 @@
+package graphics;
+
+public class Button extends GUI 
+{
+
+	public Button(String path) 
+	{
+		super(path);
+	}
+	
+	public boolean getIsClicked()
+	{
+		
+	}
+}

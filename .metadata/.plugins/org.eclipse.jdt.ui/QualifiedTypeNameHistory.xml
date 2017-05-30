@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="graphics.Graphics3D"/>
+<fullyQualifiedTypeName name="javax.media.j3d.BranchGroup"/>
+<fullyQualifiedTypeName name="com.sun.j3d.utils.geometry.ColorCube"/>
+<fullyQualifiedTypeName name="javax.media.j3d.Node"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="java.awt.event.KeyListener"/>
+<fullyQualifiedTypeName name="io.Input"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="javax.swing.Timer"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="javax.media.j3d.Canvas3D"/>
+<fullyQualifiedTypeName name="javax.media.j3d.TransformGroup"/>
+<fullyQualifiedTypeName name="javax.media.j3d.Transform3D"/>
+<fullyQualifiedTypeName name="graphics.Camera"/>
+<fullyQualifiedTypeName name="core.Player"/>
+<fullyQualifiedTypeName name="com.sun.j3d.utils.universe.SimpleUniverse"/>
+<fullyQualifiedTypeName name="javax.vecmath.Quat4d"/>
+<fullyQualifiedTypeName name="core.GameObject"/>
+<fullyQualifiedTypeName name="com.sun.j3d.utils.geometry.Box"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.FileReader"/>
+<fullyQualifiedTypeName name="java.util.Vector"/>
+<fullyQualifiedTypeName name="graphics.GUI"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="javax.vecmath.Vector2d"/>
+<fullyQualifiedTypeName name="graphics.Button"/>
+<fullyQualifiedTypeName name="graphics.BoxObject"/>
+<fullyQualifiedTypeName name="java.awt.Cursor"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="java.awt.Toolkit"/>
+<fullyQualifiedTypeName name="java.awt.Point"/>
+<fullyQualifiedTypeName name="javax.vecmath.Vector3d"/>
+<fullyQualifiedTypeName name="javax.media.j3d.Texture2D"/>
+</qualifiedTypeNameHistroy>

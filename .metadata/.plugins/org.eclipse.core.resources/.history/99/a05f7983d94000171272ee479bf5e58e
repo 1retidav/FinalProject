@@ -1,7 +1,0 @@
-package graphics;
-import com.sun.j3d.*;
-
-public class Graphics3D 
-{
-
-}

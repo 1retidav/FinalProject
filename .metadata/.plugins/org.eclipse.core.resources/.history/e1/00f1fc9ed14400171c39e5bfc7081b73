@@ -1,0 +1,54 @@
+package graphics;
+import javax.media.j3d.Transform3D;
+import javax.vecmath.Vector3d;
+
+import com.sun.j3d.utils.universe.SimpleUniverse;
+
+public class Camera 
+{
+	SimpleUniverse gameUniverse = null;
+	Vector3d position, forward, right;
+	double rotationDegrees = 0.0;
+	
+	public Camera()
+	{
+		
+	}
+	
+	public Camera(SimpleUniverse universe)
+	{
+		gameUniverse = universe;
+	}
+	
+	public void setUniverse(SimpleUniverse toSet)
+	{
+		gameUniverse = toSet;
+	}
+	
+	public void SetPosition(Vector3d positionNew)
+	{
+		position = positionNew;
+	}
+	
+	public void SetRotation(double rotation)
+	{
+		rotationDegrees = rotation;
+	}
+	
+	public void Update()
+	{
+		if(!gameUniverse.equals(null))
+		{
+			Transform3D positionTransform = new Transform3D();
+			Transform3D rotationTransform = new Transform3D();
+			rotationTransform.rotY(-rotationDegrees);
+			forward = new Vector3d(0, 0, -1);
+			rotationTransform.transform(forward);
+			positionTransform.setTranslation(new Vector3d(position.x, position.y, position.z));
+			Transform3D newTransform = positionTransform;
+			newTransform.mul(rotationTransform);
+			//forward = newTransform.get
+			gameUniverse.getViewingPlatform().getViewPlatformTransform().setTransform(newTransform);
+		}
+	}
+}

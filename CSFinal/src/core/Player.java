@@ -7,7 +7,6 @@ import graphics.Camera;
 public class Player extends Character 
 {
 	private Camera playerCamera = new Camera();
-	private SimpleUniverse universe;
 	
 	public Player()
 	{
@@ -16,13 +15,19 @@ public class Player extends Character
 	
 	public Player(SimpleUniverse gameUniverse)
 	{
-		universe = gameUniverse;
 		playerCamera.setUniverse(gameUniverse);
 		update();
 	}
 	
+	@Override
+	public void move(double x, double y, double z)
+	{
+		playerCamera.move(x, y, z);
+	}
+	
 	public void update()
 	{
-		playerCamera.SetPosition(getPosition());
+		playerCamera.SetRotation(getRotation().y);
+		playerCamera.Update();
 	}
 }

@@ -1,5 +1,9 @@
 package io;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Vector;
 
 /**
@@ -10,7 +14,7 @@ import java.util.Vector;
  */
 public class FileLoader 
 {
-	static Vector<String> fileContents;
+	static Vector<String> fileContents = new Vector<String>();
 	
 	public FileLoader()
 	{
@@ -19,16 +23,38 @@ public class FileLoader
 	
 	public FileLoader(String path)
 	{
-		
+		LoadFile(path);
 	}
 	
-	public void LoadFile()
+	public void LoadFileFromPath(String path)
 	{
-		
+		fileContents = new Vector<String>();
+		File inputFile = new File(path);
+		try 
+		{
+			BufferedReader br = new BufferedReader(new FileReader(inputFile));
+			
+			String line = "";
+			while((line = br.readLine()) != null)
+			{
+				fileContents.add(line);
+			}
+			
+			br.close();
+		} catch (IOException e) 
+		{
+			System.out.println("File not loaded successfully: " + path);
+		}
 	}
 	
-	public void LoadFile(String path)
+	public Vector<String> LoadFile(String path)
 	{
-		
+		LoadFileFromPath(path);
+		return fileContents;
+	}
+	
+	public Vector<String> GetFileContents()
+	{
+		return fileContents;
 	}
 }
