@@ -1,0 +1,13 @@
+package core;
+
+import graphics.BoxObject;
+
+public class Character extends GameObject
+{
+	private BoxObject characterObject = new BoxObject();
+
+	public BoxObject getObject()
+	{
+		return characterObject;
+	}
+}
