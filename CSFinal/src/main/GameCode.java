@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Color;
+
 import javax.vecmath.Vector3d;
 
 import core.Player;
@@ -45,10 +47,28 @@ public class GameCode
 		//Set the position of the button to be more appropriate
 		gameStartButton.setPosition(500, 400);
 		
-		//Add a Box to the scene. This is the basic shape that we will be using
+		//Create a box. This is the basic shape that we will be using
 		//Argument 1: position Argument 2: rotation Argument 3: Scale
-		BoxObject ground = new BoxObject(new Vector3d(0.0, -5.0, 0.0), new Vector3d(0.0, 0.0, 0.0), new Vector3d(1.0, 1.0, 1.0));
+		BoxObject ground = new BoxObject(new Vector3d(0.0, 0.0, 0.0), new Vector3d(0.0, 0.0, 0.0), new Vector3d(10.0, 1.0, 1.0));
+		
+		//Set the material of the box to be grass. This material is simply an image from google images
+		ground.setMaterial("Images//Grass.jpg");
+		
+		//Add the box to the scene
 		graphicsHandler.AddObject(ground);
+		
+		//Add a directional light to the scene. A directional light is like the sun: it has no position
+		//The first 3 arguments are the direction the light is coming from, the last one is the color of the light
+		graphicsHandler.addDirectionalLight(2, 5, 0, Color.WHITE);
+		
+		//Set the background image of the level to be a sky image
+		graphicsHandler.setBackgroundImage("Images//sky.jpg");
+		
+		//Add the player to the scene
+		player.addToScene();
+		
+		//Now that we have added all the objects to the scene, we can compile the scene
+		graphicsHandler.compileObjects();
 		
 		/**
 		 * END SAMPLE LEVEL

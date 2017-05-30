@@ -1,16 +1,26 @@
 package graphics;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GraphicsConfiguration;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
+import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
+import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.Texture2D;
+import javax.media.j3d.TransformGroup;
 import javax.swing.JFrame;
 import javax.swing.Timer;
-
+import javax.vecmath.Color3f;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3f;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
@@ -22,6 +32,8 @@ public class Graphics3D
 	static Vector<GUI> GUIImages = new Vector<GUI>();
 	static Viewport3D viewport;
 	static JFrame frame;
+	Texture2D backgroundImage = new Texture2D();
+	BufferedImage bgImage = new BufferedImage(1280, 720, BufferedImage.TYPE_INT_ARGB);
 	
 	public Graphics3D()
 	{
@@ -53,7 +65,9 @@ public class Graphics3D
 	
 	public void AddObject(BoxObject toAdd)
 	{
-		objects.addChild(toAdd.getShape());		
+		TransformGroup ObjectTransform = new TransformGroup(toAdd.getTransform());
+		ObjectTransform.addChild(toAdd.getShape());
+		objects.addChild(ObjectTransform);		
 	}
 	
 	public void compileObjects()
@@ -85,9 +99,34 @@ public class Graphics3D
 		getCanvas().setCursor(blankCursor);
 	}
 	
+	public void setBackgroundImage(String path)
+	{
+		try 
+		{
+			bgImage = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void clearGUI()
 	{
 		GUIImages.clear();
+	}
+	
+	public void clearScene()
+	{
+		clearGUI();
+		objects = new BranchGroup();
+	}
+	
+	public void addDirectionalLight(double x, double y, double z, Color lightColor)
+	{
+		DirectionalLight lightToAdd = new DirectionalLight();
+		lightToAdd.setDirection(new Vector3f((float)x, (float)y, (float)z));
+		lightToAdd.setColor(new Color3f(lightColor));
+		lightToAdd.setInfluencingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0));
+		objects.addChild(lightToAdd);
 	}
 	
 	public class Viewport3D extends Canvas3D   
@@ -98,8 +137,14 @@ public class Graphics3D
 		}
 
 		private static final long serialVersionUID = 7144426579917281131L;
+		
+		@Override
+		public void preRender()
+		{
+			this.getGraphics2D().drawImage(bgImage, 0, 0, null);
+			this.getGraphics2D().flush(false);
+		}
         
-        @Override
         public void postRender()
         {
         	for(int i = 0; i < GUIImages.size(); i++)

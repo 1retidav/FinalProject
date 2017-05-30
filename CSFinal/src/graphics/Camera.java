@@ -10,7 +10,8 @@ public class Camera
 	Vector3d position = new Vector3d(0, 0, 0);
 	Vector3d forward = new Vector3d(0, 0, 1);
 	double rotationDegrees = 0.0;
-	
+	double levelBoundaryLeft = -10;
+	double levelBoundaryRight = 10;
 	
 	public Camera()
 	{
@@ -30,11 +31,15 @@ public class Camera
 	public void SetPosition(Vector3d positionNew)
 	{
 		position = positionNew;
+		position.x = Math.max(position.x, levelBoundaryLeft);
+		position.x = Math.min(position.x, levelBoundaryRight);
 	}
 	
 	public void move(double x, double y, double z)
 	{
 		position.add(new Vector3d(x * 0.25, y, z));
+		position.x = Math.max(position.x, levelBoundaryLeft);
+		position.x = Math.min(position.x, levelBoundaryRight);
 	}
 	
 	public void SetRotation(double rotation)
@@ -50,8 +55,8 @@ public class Camera
 			Transform3D positionTransform = new Transform3D();
 			rotationDegrees = Math.min(rotationDegrees, 0.1);
 			rotationDegrees = Math.max(-0.1, rotationDegrees);
-			//rotationTransform.rotY(-rotationDegrees);
-			positionTransform.setTranslation(new Vector3d(position.x, 0, 5));
+			rotationTransform.rotX(-0.1);
+			positionTransform.setTranslation(new Vector3d(position.x, 3, 10));
 			Transform3D newTransform = positionTransform;
 			newTransform.mul(rotationTransform);
 			gameUniverse.getViewingPlatform().getViewPlatformTransform().setTransform(newTransform);

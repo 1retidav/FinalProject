@@ -27,7 +27,7 @@ public class Main
 		
 		graphicsHandler.getWindow().setLocation(50, 50);
 		
-		player = new Player(graphicsHandler.getUniverse());
+		player = new Player(graphicsHandler);
 		Input.Register();
 		
 		GameCode.onGameStart(graphicsHandler, player);

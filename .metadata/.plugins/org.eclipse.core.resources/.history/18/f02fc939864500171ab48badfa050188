@@ -1,0 +1,20 @@
+package core;
+
+import javax.vecmath.Vector3d;
+
+import graphics.BoxObject;
+
+public class Character extends GameObject
+{
+	private BoxObject characterObject = new BoxObject();
+
+	public BoxObject getObject()
+	{
+		return characterObject;
+	}
+	
+	public static void rebuildObject(Vector3d position, Vector3d rotation, Vector3d scale)
+	{
+		characterObject = new BoxObject(position, rotation, scale);
+	}
+}

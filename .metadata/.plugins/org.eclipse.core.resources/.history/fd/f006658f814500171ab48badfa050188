@@ -1,0 +1,153 @@
+package graphics;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.GraphicsConfiguration;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Vector;
+
+import javax.imageio.ImageIO;
+import javax.media.j3d.Background;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Canvas3D;
+import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.ImageComponent2D;
+import javax.media.j3d.Texture2D;
+import javax.media.j3d.TransformGroup;
+import javax.swing.JFrame;
+import javax.swing.Timer;
+import javax.vecmath.Color3f;
+import javax.vecmath.Vector3f;
+
+import com.sun.j3d.utils.image.TextureLoader;
+import com.sun.j3d.utils.universe.SimpleUniverse;
+
+
+public class Graphics3D 
+{
+	static SimpleUniverse universe;
+	static BranchGroup objects;
+	static Timer refreshTimer = new Timer(60, null);
+	static Vector<GUI> GUIImages = new Vector<GUI>();
+	static Viewport3D viewport;
+	static JFrame frame;
+	
+	public Graphics3D()
+	{
+		frame = new JFrame();
+		objects = new BranchGroup();
+		viewport = new Viewport3D(SimpleUniverse.getPreferredConfiguration());
+	    universe = new SimpleUniverse(viewport);
+		universe.getViewingPlatform().setNominalViewingTransform();
+		universe.getViewer().getView().setBackClipDistance(100.0);
+		universe.getViewer().getView().setFrontClipDistance(0.1);
+		frame.add(viewport);
+		frame.setVisible(true);
+	}
+	
+	public JFrame getWindow()
+	{
+		return frame;
+	}
+	
+	public Canvas3D getCanvas()
+	{
+		return universe.getCanvas();
+	}
+	
+	public SimpleUniverse getUniverse()
+	{
+		return universe;
+	}
+	
+	public void AddObject(BoxObject toAdd)
+	{
+		TransformGroup ObjectTransform = new TransformGroup(toAdd.getTransform());
+		ObjectTransform.addChild(toAdd.getShape());
+		objects.addChild(ObjectTransform);		
+	}
+	
+	public void compileObjects()
+	{
+		objects.compile();
+		universe.addBranchGraph(objects);
+	}
+	
+	public void AddGUIImage(GUI toAdd)
+	{
+		GUIImages.add(toAdd);
+	}
+	
+	public void AddGUIButton(Button toAdd)
+	{
+		GUIImages.add(toAdd);
+	}
+	
+	public void Repaint()
+	{
+		universe.getCanvas().getView().repaint();		
+	}
+	
+	public void HideMouse()
+	{
+		BufferedImage blankImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(blankImg, new Point(0, 0), "blank");
+				
+		getCanvas().setCursor(blankCursor);
+	}
+	
+	public void setBackgroundImage(String path)
+	{
+		Texture2D backgroundImage = new Texture2D();
+		
+		try 
+		{
+			backgroundImage = (Texture2D)new TextureLoader(ImageIO.read(new File(path))).getTexture();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Background bg = new Background();
+		bg.setImage((ImageComponent2D)backgroundImage.getImage(0));
+		objects.addChild(bg);
+	}
+	
+	public void clearGUI()
+	{
+		GUIImages.clear();
+	}
+	
+	public void addDirectionalLight(double x, double y, double z, Color lightColor)
+	{
+		DirectionalLight lightToAdd = new DirectionalLight();
+		lightToAdd.setDirection(new Vector3f((float)x, (float)y, (float)z));
+		lightToAdd.setColor(new Color3f(lightColor));
+		objects.addChild(lightToAdd);
+	}
+	
+	public class Viewport3D extends Canvas3D   
+	{
+        public Viewport3D(GraphicsConfiguration arg0) 
+        {
+			super(arg0);
+		}
+
+		private static final long serialVersionUID = 7144426579917281131L;
+        
+        @Override
+        public void postRender()
+        {
+        	for(int i = 0; i < GUIImages.size(); i++)
+    		{
+        		if(GUIImages.get(i).getIsVisible())
+        		{
+        			this.getGraphics2D().drawImage(GUIImages.get(i).getImage(), (int)GUIImages.get(i).getPosition().x, (int)GUIImages.get(i).getPosition().y, null);
+        			this.getGraphics2D().flush(false);
+        		}
+        	}
+        }
+    };
+}
