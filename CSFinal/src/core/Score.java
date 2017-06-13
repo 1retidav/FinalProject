@@ -1,19 +1,37 @@
 package core;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Score {
-
-	public int lives = 3;
-	public int scoreBase = 1000;
-	public int scoreLost0 = 500;
-	public int scoreLost1 = 400;
-	public int scoreLost2 = 300;
-	public int scoreLost3 = 200;
+	private int score = 0;
+	private String highScore = "";
 	
-	public static void main(String[] args) {
-		
+	//Initializes HighScore
+	public void UpdateHighScore(){
+		if (highScore.equals("")){
+			highScore = this.GetHighScore();
+		}
 	}
-
-	public static void updateLive(){
-		
+	
+	//Gets high Score
+	public String GetHighScore(){
+		FileReader readFile = null;
+		BufferedReader reader = null;
+		try {
+			readFile = new FileReader("highscore.dat");
+			reader = new BufferedReader(readFile);
+			return reader.readLine();
+		} catch (Exception e) {
+			return "0";
+		}
+		finally{
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
