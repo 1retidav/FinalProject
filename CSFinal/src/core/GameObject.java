@@ -2,6 +2,10 @@ package core;
 
 import javax.media.j3d.Transform3D;
 import javax.vecmath.Vector3d;
+import com.sun.j3d.utils.geometry.Box;
+import com.sun.j3d.utils.geometry.Primitive;
+
+import graphics.BoxObject;
 
 public class GameObject 
 {
@@ -9,6 +13,10 @@ public class GameObject
 	private Vector3d position = new Vector3d(0, 0, 0);
 	private Vector3d rotation = new Vector3d(0, 0, 0);
 	private Vector3d scale = new Vector3d(0, 0, 0);
+	double dist = 0;
+	double timeAtCollision;
+	double changeOfYVelocity;
+	double yInitialVelocity = 18.04;
 	
 	public GameObject() 
 	{
@@ -105,5 +113,68 @@ public class GameObject
 	public Vector3d getRotation()
 	{
 		return rotation;
+	}
+	/**
+	 * This method deals with collision detection
+	 * @param enemyObject is the invisible box around enemies that is made to easily detect position
+	 * @param characterObject is the invisible box around the player made to easily detect position
+	 * @param min is the minimum scalar distance in between the player and enemy that does not cause a collision
+	 * @return a boolean for the question: Did the player collide with an enemy. 
+	 */
+	public boolean getIsColliding(BoxObject enemyObject, BoxObject characterObject, double min)
+	{			
+		Vector3d objPosEnemy = enemyObject.getPosition();
+		Vector3d objPosPlayer = characterObject.getPosition();
+		
+		dist = Math.sqrt((Math.pow(objPosEnemy.x - objPosPlayer.x,2))+(Math.pow(objPosEnemy.y - objPosPlayer.y,2))+(Math.pow(objPosEnemy.z - objPosPlayer.z,2)));
+		
+		if (dist < min){
+			timeAtCollision = System.currentTimeMillis()*60;
+			return true;
+		}
+		else
+			return false;
+	}
+	/**
+	 * This method deals with the event of a collision
+	 * @param enemyObject is the invisible box around enemies that is made to easily detect position
+	 * @param min is the minimum scalar distance in between the player and enemy that does not cause a collision
+	 * @param velocity of the object coming at the player.
+	 * @param xAtCollision is the x-coordinate upon collision. 
+	 * @param yAtCollision is the y-coordinate upon collision.
+	 * @param zAtCollision is the z-coordinate upon collision.
+	 */
+	public void collision(BoxObject enemyObject, double min, double xAtCollision, double yAtCollision, double zAtCollision, double xVelocity)
+	{
+		
+		double time = (System.currentTimeMillis()*60)-timeAtCollision;
+		double gravityAccel = 9.81;
+		yInitialVelocity = changeOfYVelocity;
+		double ChangeOfNewYVelocity = yInitialVelocity - gravityAccel*(time);
+		
+		double aDistance = Math.sqrt((Math.pow(-xVelocity*(time)-xAtCollision,2))+Math.pow(ChangeOfNewYVelocity*(time)-yAtCollision, 2));
+		// to be called if(getIsColliding(enemyObject, Character.characterObject, min) == true)
+		double xOfnewVector = ((aDistance*dist)/(Math.sqrt(2)*(xAtCollision+1)));
+		double yofNewVector = ((aDistance*dist)/(Math.sqrt(2)*(yAtCollision+1)));
+
+			
+		//negative velocity in every direction except z which is constant
+		enemyObject.setPosition(xOfnewVector, yofNewVector, zAtCollision);
+		//Change background to red
+	}
+	/**
+	 * This method handles the projectile motion of the enemy objects
+	 * @param enemyObject is the invisible box around the enemy object
+	 * @param xVelocity the constant x velocity at which the enemy object is moving at.
+	 * @param timeAtSpawn is the time at which the enemy object is spawned and starts moving. 
+	 */
+	public void InitialtrajectoryOfEnemyObjects(BoxObject enemyObject, double xVelocity, double timeAtSpawn)
+	{
+		//y axis movement
+		double time = (System.currentTimeMillis()*60)-timeAtSpawn;
+		double gravityAccel = 9.81; 
+		changeOfYVelocity = yInitialVelocity - gravityAccel*(time);
+		
+		enemyObject.move(xVelocity, changeOfYVelocity, 0);
 	}
 }

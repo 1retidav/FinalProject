@@ -1,0 +1,5 @@
+Grass
+sky
+white
+10
+1
