@@ -1,8 +1,0 @@
-package graphics;
-
-import core.GameObject;
-
-public class BoxObject extends GameObject 
-{
-	Box shape = new Box();
-}
