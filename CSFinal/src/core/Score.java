@@ -8,7 +8,7 @@ public class Score {
 	private int score = 0;
 	private String highScore = "";
 	
-	//Initializes HighScore
+	//Initializes HighScore here
 	public void UpdateHighScore(){
 		if (highScore.equals("")){
 			highScore = this.GetHighScore();
