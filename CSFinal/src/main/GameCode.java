@@ -1,9 +1,11 @@
 package main;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 import javax.vecmath.Vector3d;
 
+import core.Health;
 import core.Player;
 import graphics.BoxObject;
 import graphics.Button;
@@ -75,13 +77,13 @@ public class GameCode
 		//Now that we have added all the objects to the scene, we can compile the scene
 		graphicsHandler.compileObjects();
 		
-		
 		/**
 		 * END SAMPLE LEVEL
 		 */
 		
 		graphicsHandler.AddGUIButton(loadGameButton);
 		loadGameButton.setPosition(500, 500);
+		
 	}
 	
 	/**
@@ -127,6 +129,14 @@ public class GameCode
 				graphicsHandler.HideMouse();
 				//Lock the mouse cursor in place. This will prevent it from going outside the window when you look around
 				Input.lockMouse();
+				
+				Health health = new Health();
+				GUI LiveCount = new GUI ("Images//red_heart.png");
+				GUI LiveCount2 = new GUI ("Images//red_heart.png");
+				GUI LiveCount3 = new GUI ("Images//red_heart.png");
+				//Sets heart points
+				LiveCount.setPosition(500, 500);
+				graphicsHandler.AddGUIImage(LiveCount);
 				}
 			}
 			
@@ -147,6 +157,20 @@ public class GameCode
 				Input.lockMouse();
 				
 				tutorialShown = true;
+				Health health = new Health();
+				GUI LiveCount = new GUI ("Images//red_heart.png");
+				GUI LiveCount2 = new GUI ("Images//red_heart.png");
+				GUI LiveCount3 = new GUI ("Images//red_heart.png");
+
+				//Sets heart points
+				LiveCount.setPosition(200, 0);
+				graphicsHandler.AddGUIImage(LiveCount);
+
+				LiveCount2.setPosition(100, 0);
+				graphicsHandler.AddGUIImage(LiveCount2);
+
+				LiveCount3.setPosition(0, 0);
+				graphicsHandler.AddGUIImage(LiveCount3);
 			}
 		}
 		
