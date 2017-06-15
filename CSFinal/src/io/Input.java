@@ -145,6 +145,11 @@ public class Input
 		return false;
 	}
 	
+	public static void SetKeyDown(char key, boolean toSet)
+	{
+		keysDown[(int)key] = toSet;
+	}
+	
 	public static void Update()
 	{
 		mouseDeltaPos = new Point(0, 0);

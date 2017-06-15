@@ -114,6 +114,7 @@ public class GameObject
 	{
 		return rotation;
 	}
+	
 	/**
 	 * This method deals with collision detection
 	 * @param enemyObject is the invisible box around enemies that is made to easily detect position
@@ -135,6 +136,7 @@ public class GameObject
 		else
 			return false;
 	}
+	
 	/**
 	 * This method deals with the event of a collision
 	 * @param enemyObject is the invisible box around enemies that is made to easily detect position
@@ -162,6 +164,7 @@ public class GameObject
 		enemyObject.setPosition(xOfnewVector, yofNewVector, zAtCollision);
 		//Change background to red
 	}
+	
 	/**
 	 * This method handles the projectile motion of the enemy objects
 	 * @param enemyObject is the invisible box around the enemy object

@@ -19,8 +19,13 @@ import io.Input;
  */
 public class GameCode 
 {
+	public static boolean tutorialShown = false;
 	public static int gameState = 0; //The state of the game. 0 = on startup. 1 = playing. 2 = paused. 3 = on exit
-	public static Button gameStartButton = new Button("Images//StartButton.png"); //The button that will be shown at the start of the game
+	public static Button gameStartButton = new Button("Images//NewGame.jpg"); //The button that will be shown at the start of the game
+	public static Button tutorialNextButton = new Button("Images//Next.jpg"); //The button that will be shown at the start of the game
+	public static Button loadGameButton = new Button("Images//LoadGame.jpg"); //The button that will be shown at the start of the game
+	public static Button saveGameButton = new Button("Images//SaveGame.jpg"); //The button that will be shown at the start of the game
+
 	
 	/**
 	 * This function is run when the game is first started up. 
@@ -36,7 +41,7 @@ public class GameCode
 		 */
 		
 		//This image is shown when the game starts up
-		GUI gameStartImage = new GUI("Images//Title.png");
+		GUI gameStartImage = new GUI("Images//Title.jpg");
 		
 		//Add the image to the scene so that it is actually drawn
 		graphicsHandler.AddGUIImage(gameStartImage);
@@ -45,7 +50,7 @@ public class GameCode
 		graphicsHandler.AddGUIButton(gameStartButton);
 		
 		//Set the position of the button to be more appropriate
-		gameStartButton.setPosition(500, 400);
+		gameStartButton.setPosition(500, 350);
 		
 		//Create a box. This is the basic shape that we will be using
 		//Argument 1: position Argument 2: rotation Argument 3: Scale
@@ -70,9 +75,13 @@ public class GameCode
 		//Now that we have added all the objects to the scene, we can compile the scene
 		graphicsHandler.compileObjects();
 		
+		
 		/**
 		 * END SAMPLE LEVEL
 		 */
+		
+		graphicsHandler.AddGUIButton(loadGameButton);
+		loadGameButton.setPosition(500, 500);
 	}
 	
 	/**
@@ -100,6 +109,16 @@ public class GameCode
 			//Check if the player is clicking on the start button. The first argument is mouse position, second is whether it is being clicked
 			if(gameStartButton.getIsClicked(Input.GetMousePosition(), Input.IsLeftMouseButtonDown()))
 			{
+				if(!tutorialShown)
+				{
+					graphicsHandler.clearGUI();
+					GUI tutorialImage = new GUI("Images//Tutorial.jpg");
+					graphicsHandler.AddGUIImage(tutorialImage);
+					tutorialNextButton.setPosition(800, 200);
+					graphicsHandler.AddGUIButton(tutorialNextButton);
+				} 
+				else
+				{
 				//Change the gamestate to be 1(playing).
 				gameState = 1;
 				//Remove all the existing GUI images from the scene
@@ -108,6 +127,26 @@ public class GameCode
 				graphicsHandler.HideMouse();
 				//Lock the mouse cursor in place. This will prevent it from going outside the window when you look around
 				Input.lockMouse();
+				}
+			}
+			
+			if(loadGameButton.getIsClicked(Input.GetMousePosition(), Input.IsLeftMouseButtonDown()))
+			{
+				
+			}
+			
+			if(tutorialNextButton.getIsClicked(Input.GetMousePosition(), Input.IsLeftMouseButtonDown()))
+			{
+				//Change the gamestate to be 1(playing).
+				gameState = 1;
+				//Remove all the existing GUI images from the scene
+				graphicsHandler.clearGUI();
+				//Hide the mouse cursor(more polished look)
+				graphicsHandler.HideMouse();
+				//Lock the mouse cursor in place. This will prevent it from going outside the window when you look around
+				Input.lockMouse();
+				
+				tutorialShown = true;
 			}
 		}
 		
@@ -122,8 +161,47 @@ public class GameCode
 			if(Input.IsKeyDown('d'))
 			{
 				player.move(1, 0, 0);
-			}	
+			}
+			
+			if(Input.IsKeyDown('p'))
+			{
+				GUI Paused = new GUI("Images//Paused.jpg");
+				saveGameButton.setPosition(800, 100);
+				loadGameButton.setPosition(800, 400);
+				graphicsHandler.AddGUIImage(Paused);
+				graphicsHandler.AddGUIButton(saveGameButton);
+				graphicsHandler.AddGUIButton(loadGameButton);
+				graphicsHandler.ShowMouse();
+				Input.unlockMouse();
+				Input.SetKeyDown('p', false);
+				gameState = 2;
+			}
 		}
+		
+		if(gameState == 2)
+		{
+			if(Input.IsKeyDown('p'))
+			{
+				graphicsHandler.clearGUI();
+				Input.lockMouse();
+				graphicsHandler.HideMouse();
+				Input.SetKeyDown('p', false);
+				gameState = 1;
+			}
+			
+			if(saveGameButton.getIsClicked(Input.GetMousePosition(), Input.IsLeftMouseButtonDown()))
+			{
+				GUI gameSavedImage = new GUI("Images//GameSaved.jpg");
+				gameSavedImage.setPosition(800, 100);
+				graphicsHandler.AddGUIImage(gameSavedImage);
+			}
+			
+			if(loadGameButton.getIsClicked(Input.GetMousePosition(), Input.IsLeftMouseButtonDown()))
+			{
+				
+			}
+		}
+		
 		
 		//If the 'q' key is pressed, quit the game
 		if(Input.IsKeyDown('q'))

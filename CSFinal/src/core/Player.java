@@ -1,9 +1,4 @@
 package core;
-
-import javax.vecmath.Vector3d;
-
-import com.sun.j3d.utils.universe.SimpleUniverse;
-
 import graphics.Camera;
 import graphics.Graphics3D;
 
@@ -27,7 +22,6 @@ public class Player extends Character
 	public void addToScene()
 	{
 		characterObject.setMaterial("Images//TestImage.png");
-		characterObject.setPosition(0, 1, 0);
 		graphicsHandler.AddObject(characterObject);
 	}
 	
@@ -35,6 +29,7 @@ public class Player extends Character
 	public void move(double x, double y, double z)
 	{
 		playerCamera.move(x, y, z);
+		characterObject.move(x, y, z);
 	}
 	
 	public void update()
